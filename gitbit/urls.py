@@ -16,8 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from front.views import base 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('github/api/', include('git_api.urls')),
     path('bitbucket/api/', include('bitbucket_api.urls')),
+    path('', base),
 ]

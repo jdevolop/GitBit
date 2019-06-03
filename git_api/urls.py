@@ -4,5 +4,5 @@ from .middlewares import search, commit
 
 urlpatterns = [
     path('search/', search, name='search'),
-    url(r'^commit/(?P<owner>\w+)/(?P<repo>\w+)/$', commit, name='commit')
+    url(r'^commit/(?P<owner>.+)/(?P<repo>.+)/$', commit, name='commit')
 ]

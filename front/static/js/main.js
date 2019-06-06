@@ -39,12 +39,12 @@ const loaders = `<div class="progress">
 const gitCsv = document.querySelector('#inp1');
 const bitCsv = document.querySelector('#inp2');    
 
-async function getGithub(url, generate, res, term) {
+async function getGithub(url, generate, term) {
   req = new XMLHttpRequest();
-  d_btn = get_csv_btn('github/api/download/csv/?search_term='+term);
   req.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200) {
       resp = JSON.parse(this.responseText).data;
+      gitCsv.innerHTML = `<a href="http://127.0.0.1/github/api/download/csv?search_term=${term}" class="waves-effect waves-light btn">Download as CSV</a>`;
       
       if (just) {
         just.innerHTML = '';
@@ -58,7 +58,6 @@ async function getGithub(url, generate, res, term) {
         just.appendChild(card);
       }
      
-      gitCsv.innerHTML = `<a href="http://127.0.0.1/github/api/download/csv/?search_term=${term}" class="waves-effect waves-light btn">Download as CSV</a>`;
        
       res.appendChild(just);      
 
@@ -303,11 +302,11 @@ function contentBit(fullname, link, description, u, lang, private='') {
 
 async function getBitRepo(url, gen, result, term) {
   req = new XMLHttpRequest();
-  d_btn = get_csv_btn('bitbucket/api/download/csv/?username='+term);
 
   req.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200) {
       let resp = JSON.parse(this.responseText).data;
+      bitCsv.innerHTML = `<a href="http://127.0.0.1/bitbucket/api/download/csv?username=${term}" class="waves-effect waves-light btn">Download as CSV</a>`;
       
       if (st) {
         st.innerHTML = '';
@@ -328,7 +327,6 @@ async function getBitRepo(url, gen, result, term) {
         st.appendChild(card);
       }
      
-      bitCsv.innerHTML = `<a href="http://127.0.0.1/github/api/download/csv/?username=${term}" class="waves-effect waves-light btn">Download as CSV</a>`;
        
       result.appendChild(st);
       

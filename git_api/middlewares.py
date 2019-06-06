@@ -29,7 +29,7 @@ def commit(request, owner, repo):
 
 def download_as_csv(request):
     search_term = request.GET.get('search_term')
-    req = requests.get('http://127.0.0.1/github/api/search/?search_term='+search_term)
+    req = requests.get('http://127.0.0.1/github/api/search/?search_term='+str(search_term))
     
     if req.status_code == 200:        
         data = req.json()['data']

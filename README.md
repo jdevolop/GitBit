@@ -27,18 +27,11 @@
     
     `GET /github/api/search/?search_term={String}`
 
-Response:  
->     {
->    "data": [
->        {
->            "full_name": {String},
->            "html_url": {String},
->            "description": {String},
->            "updated_at": {Date},
->            "stargazers_count": {Integer},
->            "language": {String}
->        },
->        ...]
 ---
+
 - owner - Repository owner
 - repo - repository name
+
+    `GET /github/api/commit/{owner}/{repo}/`
+    
+    

@@ -8,60 +8,78 @@
         <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
     </head>
-    <body>
-        
-        <div class="container">
+    <body class="grey lighten-4">
+        <div class="left" id="look">
+
             
             <div class="row">
                 <ul id="tabs-swipe-demo" class="tabs">
-                    <li class="tab col s6"><a href="#test-swipe-1" class="black-text">GitHub</a></li>
+                    <li class="tab col s6" id="git"><a href="#test-swipe-1" class="black-text">GitHub</a></li>
                     <li class="tab col s6"><a class="blue-text active" href="#test-swipe-2">BitBucket</a></li>
                 </ul>
             </div>
             
 
               <div class="z-depth-0">
-                <div id="test-swipe-1" class="col s12">
+                <div id="test-swipe-1" class="col s12 white">
+                        <div id="loader" class=""></div>
+
                         <div class="input-field col s12 container">
-                            <input type="text" id="input1" class="materialize-input col s4" placeholder="search repository"></input>
-                            <button id="search" class="btn waves-effect waves-light center-align" type="submit" name="action">Search repo
+
+                            <input type="text" id="input1" class="materialize-input col s4" placeholder="repository"></input>
+                            <button id="search" class="btn waves-effect waves-light center-align" type="submit" name="action">Search repository
                                     <i class="material-icons right">send</i>
                             </button>
+                            <div id="inp1" class="right">
+                            </div>
                         </div>            
-                    
-                    <div id="result" class=""></div>
+                        
+                    <div id="result" class="">
+                        <div id="just"></div>
+                    </div>
 
                 </div>
-                <div id="test-swipe-2" class="col s12 cyan lighten-5">Test 2</div>
+                <div id="test-swipe-2" class="col s12 white">
+                        <div id="loader1" class=""></div>
+                        <div class="input-field col s12 container">
+                            <input type="text" id="input2" class="materialize-input col s4" placeholder="Username"></input>
+                            <button id="search1" class="btn waves-effect waves-light center-align" type="submit" name="action">Get repositories
+                                    <i class="material-icons right">send</i>
+                            </button>
+                            <div id="inp2" class="right"></div>
+                        </div> 
+
+                        <div id="res" class="">
+                            <div id="st"></div>
+                        </div>
+                </div>
               </div>
               
-              <span class="right">
-                    <a class="waves-effect waves btn-flat modal-trigger blue-text" href="#modal1">The Last Commit</a>
-                </span>
-
-                <!-- Modal Trigger -->
-
-    <!-- Modal Structure -->
-    <div>
-            <div id="modal1" class="modal">
-                <div class="modal-content">
-                  <div class="row">
-                      <h4>The Last Commit</h4>
-                      <a href="">hash</a>
-                  </div>
-                  <p class="black-text">msg</p><br><br>
-                    
-                  <div class="col s12 valign-wrapper"> 
-                  <img src="https://avatars1.githubusercontent.com/u/34287490?v=4" alt="" class="circle" width="30" height="30">&nbsp&nbsp
-                    <a href="">username</a> <span> &nbspUpdated on ...</span>
-                  </div>
-                </div>
-              </div>
+              
         </div>
+
+        <div class="right" id="commit">
+                <div class="card z-depth-4">    
+                    <div id="comload"></div>
+                        <div class="card-content">
+                                <h4>The Last Commit</h4>
+                                <a id="hash">hash</a>
+                            <p class="black-text" id="message">message</p><br>
+                            
+                            <div class="valign-wrapper"> 
+                            <img id="ava" alt="" class="circle">&nbsp&nbsp
+                                <a id="username">login</a>
+                            <div class="right-align" id="date">&nbsp&nbsp&nbsp&nbsp Updated on </div>
+                
+                            </div>
+                
+                        </div>
+                </div>
+        </div>
+       
         
 
-        </div>
-
+    
         
         <script src="{% static 'js/moment.js' %}"></script>          
         <script src="{% static 'js/materialize.min.js' %}"></script>

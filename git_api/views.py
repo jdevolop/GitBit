@@ -8,21 +8,32 @@ def dict_filter(my_dict, keys=['full_name', 'html_url', 'description', 'updated_
                 result[e] = v
     return result            
 
-def commit_filter(my_dict, keys=['html_url', 'commit', 'committer', 'author', 'sha']):
+def commit_filter(my_dict={}, empty=False):
     result = dict()
-    for k, v in my_dict.items():
-        for e in keys:
-            if k == e:
-                result[e] = v
+    if empty == False:
+        result['url'] = my_dict['html_url']
+        result['message'] = my_dict['commit']['message']
+        result['hash'] = my_dict['sha']
+        result['committer_date'] = my_dict['commit']['committer']['date']
+        if my_dict['committer'] != None:
+            result['login'] = my_dict['committer']['login']
+            result['avatar_url'] = my_dict['committer']['avatar_url']
+            result['html_url'] = my_dict['committer']['html_url']
+        else:
+            result['login'] = ''
+            result['avatar_url'] = ''
+            result['html_url'] = ''
+    elif empty == True:
+        result['url'] = ''
+        result['message'] = ''
+        result['hash'] = ''
+        result['committer_date'] = ''
+        result['login'] = ''
+        result['avatar_url'] = ''
+        result['html_url'] = ''
+
     return result            
  
-def d_filter(d, keys=[]):
-    result = dict()
-    for k, v in d.items():
-        for e in keys:
-            if k == e:
-                result[e] = v
-    return result  
 
 def repo_parser(response):
     trunced = response[:10]

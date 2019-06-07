@@ -26,39 +26,39 @@
 #### Response type: 'application/json'
 
 ### GitHub  
-Она вернёт 10 недавно обновлённых репоситориев
+Она вернёт 10 недавно обновлённых репоситориев по названию
 - search_term - repository name  
     
     `GET /github/api/search/?search_term={String}`
 
 ---
-Она вернёт последний коммит для этого репозитория
+Она вернёт последний коммит для этого репозитория по владельцу и названию
 - owner - Repository owner {String}
 - repo - repository name {String}
 
     `GET /github/api/commit/{owner}/{repo}/`
     
 ---
-Она вернёт готовый csv файл
+Она сгенерирует готовый csv файл по результату поиска по названию 
 - search_term - repository name  
 
     `GET /github/api/download/csv?search_term={String}`    
 
 ### BitBucket  
-Она вернёт 10 недавно обновлённых репоситориев
+Она вернёт 10 недавно обновлённых репоситориев по логину
 - username - login {String}
 
     `GET /bitbucket/api/search/{username}/repos/`
     
 ---
-Она вернёт последний коммит для этого репозитория
+Она вернёт последний коммит для этого репозитория по логину и названию
 - username - login {String}
 - slug - repository name {String}
 
     `GET /bitbucket/api/commit/{username}/{slug}/`
     
 ---
-Она вернёт готовый csv файл
+Она сгенерирует готовый csv файл по результату поиска по логину 
 - username - repository name  
 
     `GET /github/api/download/csv?username={String}`

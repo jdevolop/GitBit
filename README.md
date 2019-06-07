@@ -8,9 +8,13 @@
 
 затем  
 
-    `cd navigator-repo`  
+    `cd navigator-repo`
 
-для запуска сервера введите  
+после установить необходимые пакеты
+
+    `pip install -r requirements.txt`
+
+для запуска сервера введите в консоли
 
     `python manage.py runserver 80`
 

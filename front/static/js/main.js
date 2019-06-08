@@ -45,7 +45,8 @@ async function getGithub(url, generate, term) {
     if (this.readyState === 4 && this.status === 200) {
       resp = JSON.parse(this.responseText).data;
       gitCsv.innerHTML = `<a href="http://127.0.0.1/github/api/download/csv?search_term=${term}" class="waves-effect waves-light btn">Download as CSV</a>`;
-      
+      // res.innerHTML = '';
+
       if (just) {
         just.innerHTML = '';
       }
@@ -62,14 +63,14 @@ async function getGithub(url, generate, term) {
       res.appendChild(just);      
 
     } else if (this.readyState !== 4) {
-      // gitCsv.innerHTML = '';
+      gitCsv.innerHTML = '';
       loader.innerHTML = loaders;  
     } else if (this.status >= 500) {
-      // gitCsv.innerHTML = '';
+      gitCsv.innerHTML = '';
       loader.innerHTML = '';  
       res.innerHTML = '<h1>Some error. Please reload</h1>';
     } else if (this.status === 404) {
-      // gitCsv.innerHTML = '';
+      gitCsv.innerHTML = '';
       load.innerHTML = '';  
       res.innerHTML = '<h4>Not Found. Please reload</h4>';
     }
@@ -100,6 +101,7 @@ async function getGithubCommit(url, gen) {
   req.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200) {
       comloader.innerHTML = '';
+      // res.innerHTML = '';
 
       let { hash, message, committer_date, url,
         login, avatar_url, html_url
@@ -308,6 +310,8 @@ async function getBitRepo(url, gen, result, term) {
       let resp = JSON.parse(this.responseText).data;
       bitCsv.innerHTML = `<a href="http://127.0.0.1/bitbucket/api/download/csv?username=${term}" class="waves-effect waves-light btn">Download as CSV</a>`;
       
+      // result.innerHTML = '';
+
       if (st) {
         st.innerHTML = '';
       }
@@ -356,6 +360,8 @@ function getBitCommit(url, gener, result) {
   req.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200) {
       comloader.innerHTML = '';
+
+      // result.innerHTML = '';
 
       let { hash, message, updated_at, html_url,
         author_name, author_url, author_img

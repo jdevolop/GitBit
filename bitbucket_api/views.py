@@ -1,4 +1,4 @@
-import json, requests
+import requests
 
 def bit_filter(item):
     result = dict()
@@ -11,23 +11,27 @@ def bit_filter(item):
     return result
 
 def com_filter(res):
-    trun = res['values'][0]
     result = dict()
-    result['message'] = trun['rendered']['message']['raw']
-    result['hash'] = trun['hash']
-    result['html_url'] = trun['links']['html']['href']
-    result['author_name'] = trun['author']['user']['display_name']
-    result['author_img'] = trun['author']['user']['links']['avatar']['href']
-    result['author_url'] = trun['author']['user']['links']['html']['href']
-    result['updated_at'] = trun['date']
-    
-    return json.dumps(result)
+
+    if len(res['values']) > 0:
+        trun = res['values'][0]
+        result['message'] = trun['rendered']['message']['raw']
+        result['hash'] = trun['hash']
+        result['html_url'] = trun['links']['html']['href']
+        result['author_name'] = trun['author']['user']['display_name']
+        result['author_img'] = trun['author']['user']['links']['avatar']['href']
+        result['author_url'] = trun['author']['user']['links']['html']['href']
+        result['updated_at'] = trun['date']
+    else:
+        result['error'] = 'Not Found'
+
+    return result
 
 def bit_parser(response):
     res = response['values'][:10]
     data = dict()
     data['data'] = list(map(bit_filter, res))
-    return json.dumps(data)
+    return data
 
 
 def update_access():
@@ -41,7 +45,11 @@ def update_access():
     }
     token = requests.post(f'https://{k}:{s}@bitbucket.org/site/oauth2/access_token', headers=header, data=data)
     if token.status_code == 200:
-        return token.json()['access_token']
+        with open('-.txt', 'w') as f:
+            f.write(token.json()['access_token'])
     else:
         return 'error'
 
+def get_token():
+    with open('-.txt', 'r') as f:
+        return f.read()

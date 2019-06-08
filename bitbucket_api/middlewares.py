@@ -1,18 +1,18 @@
 # https://bitbucket.org/account/user/%7B86690619-6ad0-4469-9e21-1110c5104bc5%7D/oauth-consumers#access_token=qSgYshkh9OdInqtGUnR0TsU3MTKpJSDXZtmk0edocmI0vHSjxBpicWgVramUqrbkalTawSFahidUKSQ3bik%3D&scopes=pullrequest+account&expires_in=7200&token_type=bearer
 # https://bitbucket.org/account/user/%7B86690619-6ad0-4469-9e21-1110c5104bc5%7D/oauth-consumers?code=9Szr6y3BdHHCC56wnS
-from django.http import HttpResponse, HttpResponseForbidden, HttpResponseServerError, HttpResponseNotFound
+from django.http import HttpResponseForbidden, HttpResponseServerError, HttpResponseNotFound, JsonResponse
 import requests, json, datetime, csv
-from .views import bit_parser, com_filter, update_access
+from .views import bit_parser, com_filter, update_access, get_token
 
-class Access:
-    token = 'nDDS0H2dYZf7mvxEDkQI6yb7rcomMZUM20-oXbBqaemj5RePmqHyTuWNnHIRzBIS75r6ktZicTmQWAyemEc='
+update_access()
+
 
 def get_repos(un):
-    s_resp = requests.get('https://bitbucket.org/!api/2.0/repositories/{un}?sort=-updated_on&access_token={token}'.format(un=un, token=Access.token))
+    s_resp = requests.get('https://bitbucket.org/!api/2.0/repositories/{un}?sort=-updated_on&access_token={token}'.format(un=un, token=get_token()))
     return s_resp
 
 def get_commit(un, slug):
-    resp = requests.get('https://bitbucket.org/!api/2.0/repositories/{un}/{slug}/commits?sort=-updated_on&access_token={token}'.format(un=un, slug=slug, token=Access.token))
+    resp = requests.get('https://bitbucket.org/!api/2.0/repositories/{un}/{slug}/commits?sort=-updated_on&access_token={token}'.format(un=un, slug=slug, token=get_token()))
     return resp
 
 def search(request, un):
@@ -20,14 +20,14 @@ def search(request, un):
     s_res = s_resp.json()
     if s_resp.status_code == 200:
         s_filtered = bit_parser(s_res)
-        s_r = HttpResponse(s_filtered)
+        s_r = JsonResponse(data=s_filtered)
         s_r['Content-Type'] = 'application/json; charset=utf-8'
         return s_r
     elif s_resp.status_code == 401:
-        Access.token = update_access()
+        update_access()
         res = get_repos(un)
         filtered = bit_parser(res)
-        r = HttpResponse(filtered)
+        r = JsonResponse(data=filtered)
         r['Content-Type'] = 'application/json; charset=utf-8'
         return r
     elif s_resp.status_code == 404:
@@ -44,14 +44,20 @@ def commit(request, un, slug):
     res = resp.json()
     if resp.status_code == 200:
         filtered = com_filter(res)
-        r = HttpResponse(filtered)
+        r = JsonResponse(data=filtered)
         r['Content-Type'] = 'application/json; charset=utf-8'
         return r
     elif resp.status_code == 401:
-        Access.token = update_access()
-        res = get_commit(un, slug)
-        filtered = com_filter(res)
-        r = HttpResponse(filtered)
+        update_access()
+        resp = get_commit(un, slug)
+        filtered = com_filter(resp)
+
+        if filtered['message'] == 'Not Found':
+            r = HttpResponseNotFound(json.dumps(filtered))
+            r['Content-Type'] = 'application/json; charset=utf-8'
+            return r
+
+        r = JsonResponse(data=filtered)
         r['Content-Type'] = 'application/json; charset=utf-8'
         return r
     elif resp.status_code == 404:
@@ -61,7 +67,7 @@ def commit(request, un, slug):
     else:
         r = HttpResponseServerError(json.dumps({'message': "Something wrong"}))
         r['Content-Type'] = 'application/json; charset=utf-8'
-        return r
+        return r   
 
 
 def download_as_csv(request):

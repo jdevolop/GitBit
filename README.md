@@ -4,7 +4,7 @@
 
 Для начала вам надо клонировать репозиторий в консоли  
 
-    `git clone https://github.com/jdevolop/navigator-repo`
+```git clone https://github.com/jdevolop/navigator-repo```
 
 затем  
 

@@ -19,10 +19,10 @@
 ```python manage.py runserver 80```
 
 Веб-Интерфейс работает по принципу SPA(Single Page Application)  
-Откройте [эту](http://127.0.0.1/)   ссылку в браузере и можете приступать к работе 
+Откройте [эту](http://localhost/)   ссылку в браузере и можете приступать к работе 
 ## API Reference
 
-#### host - 127.0.0.1
+#### host - localhost
 #### Response type: 'application/json'
 
 ### GitHub  

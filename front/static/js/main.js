@@ -45,7 +45,6 @@ async function getGithub(url, generate, term) {
     if (this.readyState === 4 && this.status === 200) {
       resp = JSON.parse(this.responseText).data;
       gitCsv.innerHTML = `<a href="http://127.0.0.1/github/api/download/csv?search_term=${term}" class="waves-effect waves-light btn">Download as CSV</a>`;
-      // res.innerHTML = '';
 
       if (just) {
         just.innerHTML = '';
@@ -405,7 +404,7 @@ const sub = document.getElementById('search1');
 sub.onclick = async function() {
 
     let search_term = document.getElementById('input2').value;
-    await getBitRepo('http://localhost/bitbucket/api/search/'+search_term+'/repos', contentBit, result, search_term);
+    await getBitRepo('http://localhost/bitbucket/api/search/'+search_term+'/repos/', contentBit, result, search_term);
     
     setInterval(coma, 4000);
 }

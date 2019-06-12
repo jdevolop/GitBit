@@ -22,6 +22,7 @@ def search(request, un):
         s_filtered = bit_parser(s_res)
         s_r = JsonResponse(data=s_filtered)
         s_r['Content-Type'] = 'application/json; charset=utf-8'
+        s_r['Access-Control-Allow-Origin'] = '*'
         return s_r
     elif s_resp.status_code == 401:
         update_access()
@@ -29,14 +30,17 @@ def search(request, un):
         filtered = bit_parser(res)
         r = JsonResponse(data=filtered)
         r['Content-Type'] = 'application/json; charset=utf-8'
+        r['Access-Control-Allow-Origin'] = '*'
         return r
     elif s_resp.status_code == 404:
         r = HttpResponseNotFound(json.dumps({"message": "Not Found"}))
         r['Content-Type'] = 'application/json; charset=utf-8'
+        r['Access-Control-Allow-Origin'] = '*'
         return r
     else:
         r = HttpResponseServerError(json.dumps({'message': "Something wrong"}))
         r['Content-Type'] = 'application/json; charset=utf-8'
+        r['Access-Control-Allow-Origin'] = '*'
         return r
 
 def commit(request, un, slug):
@@ -46,6 +50,7 @@ def commit(request, un, slug):
         filtered = com_filter(res)
         r = JsonResponse(data=filtered)
         r['Content-Type'] = 'application/json; charset=utf-8'
+        r['Access-Control-Allow-Origin'] = '*'
         return r
     elif resp.status_code == 401:
         update_access()
@@ -55,18 +60,22 @@ def commit(request, un, slug):
         if filtered['message'] == 'Not Found':
             r = HttpResponseNotFound(json.dumps(filtered))
             r['Content-Type'] = 'application/json; charset=utf-8'
+            r['Access-Control-Allow-Origin'] = '*'
             return r
 
         r = JsonResponse(data=filtered)
         r['Content-Type'] = 'application/json; charset=utf-8'
+        r['Access-Control-Allow-Origin'] = '*'
         return r
     elif resp.status_code == 404:
         r = HttpResponseNotFound(json.dumps({"message": "Not Found"}))
         r['Content-Type'] = 'application/json; charset=utf-8'
+        r['Access-Control-Allow-Origin'] = '*'
         return r    
     else:
         r = HttpResponseServerError(json.dumps({'message': "Something wrong"}))
         r['Content-Type'] = 'application/json; charset=utf-8'
+        r['Access-Control-Allow-Origin'] = '*'
         return r   
 
 
